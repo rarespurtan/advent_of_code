@@ -65,7 +65,7 @@ public class Day1 {
                 }
                 else if (elements.get(curPointer)  + elements.get(leftPointer)  + elements.get(rightPointer) < SUM)
                     leftPointer++;
-                else // A[i] + A[l] + A[r] > sum
+                else
                     rightPointer--;
             }
         }
