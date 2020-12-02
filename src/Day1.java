@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Day1 {
-
+public class Day1
+{
     ArrayList<Integer> elements = new ArrayList<>();
     final int SUM = 2020;
 
