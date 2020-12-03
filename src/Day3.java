@@ -19,7 +19,6 @@ public class Day3
             {
                 String cur = scan.nextLine();
                 elements.add(cur);
-                System.out.println(cur);
             }
         }
         catch (FileNotFoundException e)
