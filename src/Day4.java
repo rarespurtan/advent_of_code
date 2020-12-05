@@ -17,24 +17,24 @@ public class Day4
         {
             File file = new File(filename);
             Scanner scan = new Scanner(file);
-            StringBuilder cur = new StringBuilder("");
-            String a;
+            StringBuilder curPassport = new StringBuilder("");
+            String curLine;
             while (scan.hasNext())
             {
-                a = scan.nextLine();
-                if (!a.equals(""))
+                curLine = scan.nextLine();
+                if (!curLine.equals(""))
                 {
-                    cur.append(a);
-                    cur.append(" ");
+                    curPassport.append(curLine);
+                    curPassport.append(" ");
                 }
                 else
                 {
-                    elements.add(cur.toString().split(" "));
-                    cur.delete(0, cur.length());
+                    elements.add(curPassport.toString().split(" "));
+                    curPassport.delete(0, curPassport.length());
                 }
             }
-            elements.add(cur.toString().split(" "));
-            cur.delete(0, cur.length());
+            elements.add(curPassport.toString().split(" "));
+            curPassport.delete(0, curPassport.length());
 
         }
         catch (FileNotFoundException e)
@@ -60,9 +60,7 @@ public class Day4
                 if (valid) validPassportCount++;
             }
             else
-            {
                 validPassportCount++;
-            }
         }
         System.out.println(validPassportCount);
     }
