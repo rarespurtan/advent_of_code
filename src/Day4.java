@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Day4
 {
-    ArrayList<String[]> elements = new ArrayList<>();
+    private ArrayList<String[]> elements = new ArrayList<>();
 
     public Day4(String filename)
     {

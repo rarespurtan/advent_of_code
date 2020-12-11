@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 public class Day1
 {
-    ArrayList<Integer> elements = new ArrayList<>();
-    final int SUM = 2020;
+    private ArrayList<Integer> elements = new ArrayList<>();
+    private final int SUM = 2020;
 
     public Day1(String filename)
     {

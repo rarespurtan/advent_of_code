@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Day3
 {
-    ArrayList<String> elements = new ArrayList<>();
+    private ArrayList<String> elements = new ArrayList<>();
 
     public Day3(String filename)
     {
