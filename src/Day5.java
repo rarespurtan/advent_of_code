@@ -4,11 +4,9 @@ import java.util.*;
 
 public class Day5
 {
-    private String[] paths;
-    private final int ROW = 128;
-    private final int COLUMN = 8;
-    private int[][] plane = new int[ROW][COLUMN];
-    private Map<String, Integer[]> codeToSeat = new HashMap<>();
+    String[] paths;
+    int[] seats;
+    ArrayList<Character> one = new ArrayList<>();
 
     public Day5(String filename)
     {
@@ -23,6 +21,9 @@ public class Day5
             }
             paths = new String[temp.size()];
             paths = temp.toArray(new String[0]);
+            seats = new int[paths.length];
+            one.add('R');
+            one.add('B');
         }
         catch (FileNotFoundException e)
         {
@@ -30,68 +31,70 @@ public class Day5
         }
     }
 
-    public void decode()
+    public void setSeats()
     {
-        for (String code : paths)
+        for (int i = 0; i < paths.length; i++)
         {
-            String rowConfig = code.substring(0,7);
-            String colConfig = code.substring(7);
-            int row = binarySpacePartitioning(rowConfig, 0 , 127, 'F');
-            int col = binarySpacePartitioning(colConfig, 0 , 7, 'L');
-            int seatID = seatID(row, col);
-            codeToSeat.put(code, new Integer[]{row, col, seatID});
+            StringBuilder sb = new StringBuilder();
+            String rowConfig = paths[i].substring(0,7);
+            String colConfig = paths[i].substring(7);
+            checkIfExists(sb, rowConfig);
+            int rowNumber = Integer.parseInt(sb.toString(), 2);
+
+            sb = new StringBuilder();
+
+            checkIfExists(sb, colConfig);
+
+            int colNumber = Integer.parseInt(sb.toString(), 2);
+
+            seats[i] = rowNumber*8+colNumber;
         }
     }
 
-    public void printHighestSeat()
+    private void checkIfExists(StringBuilder sb, String str)
     {
-        int max = Integer.MIN_VALUE;
-        for (String str : codeToSeat.keySet())
+        for (int j = 0; j < str.length(); j++)
         {
-            if (codeToSeat.get(str)[2] > max)
+            if (one.contains(str.charAt(j)))
             {
-                max = codeToSeat.get(str)[2];
-            }
-        }
-        System.out.println(max);
-    }
-
-    public int seatID(int row, int col)
-    {
-        return row*8+col;
-    }
-
-    public int binarySpacePartitioning(String rowConfig, int l, int r, char dir)
-    {
-        int mid = ((r + l)+1)/2;
-        char c = rowConfig.charAt(0);
-        if (rowConfig.length() == 1)
-        {
-            if (c == dir)
-            {
-                return l;
-            }else
-            {
-                return r;
-            }
-        }
-        else
-        {
-            if (c == dir)
-            {
-                return binarySpacePartitioning(rowConfig.substring(1), l, mid, dir);
+                sb.append("1");
             }
             else
             {
-                return binarySpacePartitioning(rowConfig.substring(1), mid, r, dir);
+                sb.append("0");
             }
         }
+    }
+
+    private void printHighest()
+    {
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < seats.length; i++)
+        {
+            if (max < seats[i]) max = seats[i];
+        }
+        System.out.println("Highest seat number: " + max);
+    }
+
+    private void printMySeat()
+    {
+        Arrays.sort(seats);
+        int mySeat = seats[0];
+        for (int i = 1; i < seats.length-1; i++)
+        {
+            if (seats[i-1] != seats[i]-1)
+            {
+                mySeat = seats[i]-1;
+            }
+        }
+        System.out.println("My seat is :" + mySeat);
     }
 
     public static void main(String[] args)
     {
         Day5 day5 = new Day5("day5input.txt");
-        day5.decode();
-        day5.printHighestSeat();
+        day5.setSeats();
+        day5.printHighest();
+        day5.printMySeat();
     }
 }
