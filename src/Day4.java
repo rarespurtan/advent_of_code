@@ -30,7 +30,6 @@ public class Day4
             }
             elements.add(curPassport.toString().split(" "));
             curPassport.delete(0, curPassport.length());
-
         }
         catch (FileNotFoundException e)
         {
