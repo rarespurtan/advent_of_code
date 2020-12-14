@@ -6,24 +6,19 @@ public class Day6
 {
     String[] questions;
 
-    public Day6(String filename)
-    {
-        try
-        {
+    public Day6(String filename) {
+        try {
             ArrayList<String> elements = new ArrayList<>();
             File file = new File(filename);
             Scanner scan = new Scanner(file);
             StringBuilder group = new StringBuilder("");
             String curLine;
-            while (scan.hasNext())
-            {
+            while (scan.hasNext()) {
                 curLine = scan.nextLine();
-                if (!curLine.equals(""))
-                {
+                if (!curLine.equals("")) {
                     group.append(curLine);
                 }
-                else
-                {
+                else {
                     elements.add(group.toString());
                     group.delete(0, group.length());
                 }
@@ -33,22 +28,17 @@ public class Day6
             questions = new String[elements.size()];
             questions = elements.toArray(new String[0]);
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
 
-    public void makeCharsUnique()
-    {
-        for (int j = 0; j < questions.length; j++)
-        {
+    public void makeCharsUnique() {
+        for (int j = 0; j < questions.length; j++) {
             String question = questions[j];
             StringBuilder sb = new StringBuilder("");
-            for (int i = 0; i < question.length(); i++)
-            {
-                if (sb.indexOf(String.valueOf(question.charAt(i))) == -1)
-                {
+            for (int i = 0; i < question.length(); i++) {
+                if (sb.indexOf(String.valueOf(question.charAt(i))) == -1) {
                     sb.append(String.valueOf(question.charAt(i)));
                 }
             }
@@ -56,11 +46,9 @@ public class Day6
         }
     }
 
-    public void printCount()
-    {
+    public void printCount() {
         int totalcount=0;
-        for (int j = 0; j < questions.length; j++)
-        {
+        for (int j = 0; j < questions.length; j++) {
             totalcount += questions[j].length();
         }
         System.out.println(totalcount);
@@ -68,25 +56,20 @@ public class Day6
 
     ArrayList<String[]> questionsPart2 = new ArrayList<>();
 
-    public void part2(String filename)
-    {
-        try
-        {
+    public void part2(String filename) {
+        try {
             ArrayList<String> elements = new ArrayList<>();
             File file = new File(filename);
             Scanner scan = new Scanner(file);
             StringBuilder group = new StringBuilder("");
             String curLine;
-            while (scan.hasNext())
-            {
+            while (scan.hasNext()) {
                 curLine = scan.nextLine();
-                if (!curLine.equals(""))
-                {
+                if (!curLine.equals("")) {
                     group.append(curLine);
                     group.append(" ");
                 }
-                else
-                {
+                else {
                     questionsPart2.add(group.toString().split(" "));
                     group.delete(0, group.length());
                 }
@@ -95,40 +78,31 @@ public class Day6
             group.delete(0, group.length());
 
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
 
-    public void part2Answer()
-    {
+    public void part2Answer() {
         Map<Character, Integer> charCount;
         int totalAnswered = 0;
-        for (String[] curGroup : questionsPart2)
-        {
+        for (String[] curGroup : questionsPart2) {
             charCount = new HashMap<>();
             int size = curGroup.length;
 
-            for (String person : curGroup)
-            {
-                for (int i = 0; i < person.length(); i++)
-                {
-                    if (!charCount.containsKey(person.charAt(i)))
-                    {
+            for (String person : curGroup) {
+                for (int i = 0; i < person.length(); i++){
+                    if (!charCount.containsKey(person.charAt(i))) {
                         charCount.put(person.charAt(i), 1);
                     }
-                    else
-                    {
+                    else {
                         int c = charCount.get(person.charAt(i));
                         charCount.put(person.charAt(i), ++c);
                     }
                 }
             }
-            for (Character c : charCount.keySet())
-            {
-                if (charCount.get(c) == size)
-                {
+            for (Character c : charCount.keySet()) {
+                if (charCount.get(c) == size) {
                     totalAnswered++;
                 }
             }
@@ -136,8 +110,7 @@ public class Day6
         System.out.println(totalAnswered);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         String filename = "day6input.txt";
         Day6 day6 = new Day6(filename);
         day6.makeCharsUnique();

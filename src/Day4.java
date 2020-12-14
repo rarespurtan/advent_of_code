@@ -6,24 +6,19 @@ public class Day4
 {
     private ArrayList<String[]> elements = new ArrayList<>();
 
-    public Day4(String filename)
-    {
-        try
-        {
+    public Day4(String filename) {
+        try {
             File file = new File(filename);
             Scanner scan = new Scanner(file);
             StringBuilder curPassport = new StringBuilder("");
             String curLine;
-            while (scan.hasNext())
-            {
+            while (scan.hasNext()) {
                 curLine = scan.nextLine();
-                if (!curLine.equals(""))
-                {
+                if (!curLine.equals("")) {
                     curPassport.append(curLine);
                     curPassport.append(" ");
                 }
-                else
-                {
+                else {
                     elements.add(curPassport.toString().split(" "));
                     curPassport.delete(0, curPassport.length());
                 }
@@ -31,16 +26,13 @@ public class Day4
             elements.add(curPassport.toString().split(" "));
             curPassport.delete(0, curPassport.length());
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
     }
-    public void part1()
-    {
+    public void part1() {
         int validPassportCount=0;
-        for (String[] str : elements)
-        {
+        for (String[] str : elements) {
             if (!isValid(str))
                 continue;
             else
@@ -49,17 +41,13 @@ public class Day4
         System.out.println(validPassportCount);
     }
 
-    public void part2()
-    {
+    public void part2() {
         int validPassportCount = 0;
-        for (String[] passport : elements)
-        {
-            if (!isValid(passport))
-            {
+        for (String[] passport : elements) {
+            if (!isValid(passport)) {
                 continue;
             }
-            if (!checkData(passport))
-            {
+            if (!checkData(passport)) {
                 continue;
             }
 
@@ -68,68 +56,55 @@ public class Day4
         System.out.println(validPassportCount);
     }
 
-    public boolean checkData(String[] passport)
-    {
-        for (String pass : passport)
-        {
+    public boolean checkData(String[] passport) {
+        for (String pass : passport) {
             String[] curData = pass.split(":");
-            if (curData[0].equals("byr"))
-            {
+            if (curData[0].equals("byr")) {
                 if (!birthDay(curData[1])) return false;
             }
-            if (curData[0].equals("iyr"))
-            {
+            if (curData[0].equals("iyr")) {
                 if (!issueYear(curData[1])) return false;
             }
-            if (curData[0].equals("eyr"))
-            {
+            if (curData[0].equals("eyr")) {
                 if (!expirationYear(curData[1])) return false;
             }
-            if (curData[0].equals("hgt"))
-            {
+            if (curData[0].equals("hgt")){
                 if (!height(curData[1])) return false;
             }
-            if (curData[0].equals("hcl"))
-            {
+            if (curData[0].equals("hcl")) {
                 if (!hairColor(curData[1]))
                     return false;
             }
-            if (curData[0].equals("ecl"))
-            {
+            if (curData[0].equals("ecl")) {
                 if (!eyeColor(curData[1]))
                     return false;
             }
-            if (curData[0].equals("pid"))
-            {
+            if (curData[0].equals("pid")) {
                 if (!passportID(curData[1])) return false;
             }
         }
         return true;
     }
 
-    public boolean birthDay(String str)
-    {
+    public boolean birthDay(String str) {
         if (str.length() != 4) return false;
         if (Integer.parseInt(str) < 1920 || Integer.parseInt(str) > 2002) return false;
         return true;
     }
 
-    public boolean issueYear(String str)
-    {
+    public boolean issueYear(String str) {
         if (str.length() != 4) return false;
         if (Integer.parseInt(str) < 2010 || Integer.parseInt(str) > 2020) return false;
         return true;
     }
 
-    public boolean expirationYear(String str)
-    {
+    public boolean expirationYear(String str) {
         if (str.length() != 4) return false;
         if (Integer.parseInt(str) < 2020 || Integer.parseInt(str) > 2030) return false;
         return true;
     }
 
-    public boolean hairColor(String str)
-    {
+    public boolean hairColor(String str) {
         if (str.charAt(0) != '#') return false;
         if (str.length() != 7) return false;
         ArrayList<Character> allowed = new ArrayList<>();
@@ -150,16 +125,14 @@ public class Day4
         allowed.add('e');
         allowed.add('f');
 
-        for (int i = 1; i < str.length(); i++ )
-        {
+        for (int i = 1; i < str.length(); i++ ) {
             if (!allowed.contains(str.charAt(i))) return false;
         }
         return true;
     }
 
 
-    public boolean eyeColor(String str)
-    {
+    public boolean eyeColor(String str) {
         if (str.length() != 3) return false;
         ArrayList<String> allowed = new ArrayList<>();
         allowed.add("amb");
@@ -175,31 +148,25 @@ public class Day4
         return true;
     }
 
-    public boolean passportID(String str)
-    {
+    public boolean passportID(String str) {
         if (str.length() != 9) return false;
-        try
-        {
+        try {
             int n = Integer.parseInt(str);
             return true;
         }
-        catch (NumberFormatException e)
-        {
+        catch (NumberFormatException e) {
             return false;
         }
     }
 
-    public boolean height(String str)
-    {
+    public boolean height(String str) {
         if (str.length() < 4) return false;
         int number = Integer.parseInt(str.substring(0, str.length()-2));
         String metric = str.substring(str.length()-2, str.length());
-        if (metric.equals("cm"))
-        {
+        if (metric.equals("cm")) {
             if (number < 150 || number > 193) return false;
         }
-        else
-        {
+        else {
             if (number < 59 || number > 76) return false;
         }
         return true;
@@ -207,10 +174,8 @@ public class Day4
 
     public boolean isValid(String[] passport) {
         if (passport.length <= 6) return false;
-        if (passport.length == 7)
-        {
-            for (String s : passport)
-            {
+        if (passport.length == 7){
+            for (String s : passport) {
                 String[] temp = s.split(":");
                 if (temp[0].equals("cid")) return false;
             }
@@ -218,8 +183,7 @@ public class Day4
         return true;
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Day4 day4 = new Day4("day4input.txt");
         day4.part1();
         day4.part2();
