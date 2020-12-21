@@ -1,6 +1,18 @@
 f = open("input/day8input.txt", "r")
 lines = f.readlines()
 
+def run_cmd(line, acc , j):
+    cmd, num = line[0], line[1]
+    if cmd == "acc":
+        acc += int(num)
+        j += 1
+    elif cmd == "jmp":
+        j += int(num)
+    elif cmd == "nop":
+        j+=1
+    return acc, j     
+
+
 def part1():
     
     bool_ = [False for i in lines]
@@ -12,18 +24,8 @@ def part1():
             print(f'Repeated operation part 1 : {acc}')
             break
         line_ = lines[i].strip().split(" ")
-        if line_[0] == "acc":
-            acc += int(line_[1])
-            bool_[i] = True
-        elif line_[0] == "jmp":
-                bool_[i] = True 
-                i += int(line_[1])
-                continue
-        elif line_[0] == "nop":
-                bool_[i] = True
-                i+=1
-                continue
-        i += 1    
+        bool_[i] = True    
+        acc, i = run_cmd(line_, acc, i)
 
 def part2():
     for i in range(len(lines)):
@@ -42,18 +44,11 @@ def part2():
 
             terminate += 1
             line_ = temp_lines[j].split()
-            cmd, num = line_[0], line_[1]
+            acc, j = run_cmd(line_, acc, j)
 
-            if cmd == "acc":
-                acc += int(num)
-                j += 1
-            elif cmd == "jmp":
-                    j += int(num)
-            elif cmd == "nop":
-                    j+=1
-                    
         if (j == len(lines)):
-            print(acc)    
+            print(f'Part 2 : {acc}')
+            break
 
 if __name__ == '__main__':
     part1()
