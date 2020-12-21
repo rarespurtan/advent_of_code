@@ -30,16 +30,18 @@ def part1():
 def part2():
     for i in range(len(lines)):
         m_lines = list(lines)
-        j = m_lines[i]
+
         if m_lines[i].split()[0] == 'nop':
             m_lines[i] = 'jmp '+ m_lines[i].split()[1]
         elif m_lines[i].split()[0] == 'jmp':
             m_lines[i] = 'nop ' + m_lines[i].split()[1]
         else:
             continue  
+
         terminate = 0
         acc=0
         j = 0
+        
         while 0<=j<len(m_lines) and terminate<1000:
 
             terminate += 1
