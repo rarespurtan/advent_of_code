@@ -10,7 +10,7 @@ public class Day4
         try {
             File file = new File(filename);
             Scanner scan = new Scanner(file);
-            StringBuilder curPassport = new StringBuilder("");
+            StringBuilder curPassport = new StringBuilder();
             String curLine;
             while (scan.hasNext()) {
                 curLine = scan.nextLine();
@@ -33,10 +33,9 @@ public class Day4
     public void part1() {
         int validPassportCount=0;
         for (String[] str : elements) {
-            if (!isValid(str))
-                continue;
-            else
+            if (isValid(str)) {
                 validPassportCount++;
+            }
         }
         System.out.println(validPassportCount);
     }
@@ -88,20 +87,17 @@ public class Day4
 
     public boolean birthDay(String str) {
         if (str.length() != 4) return false;
-        if (Integer.parseInt(str) < 1920 || Integer.parseInt(str) > 2002) return false;
-        return true;
+        return Integer.parseInt(str) >= 1920 && Integer.parseInt(str) <= 2002;
     }
 
     public boolean issueYear(String str) {
         if (str.length() != 4) return false;
-        if (Integer.parseInt(str) < 2010 || Integer.parseInt(str) > 2020) return false;
-        return true;
+        return Integer.parseInt(str) >= 2010 && Integer.parseInt(str) <= 2020;
     }
 
     public boolean expirationYear(String str) {
         if (str.length() != 4) return false;
-        if (Integer.parseInt(str) < 2020 || Integer.parseInt(str) > 2030) return false;
-        return true;
+        return Integer.parseInt(str) >= 2020 && Integer.parseInt(str) <= 2030;
     }
 
     public boolean hairColor(String str) {
@@ -143,9 +139,7 @@ public class Day4
         allowed.add("hzl");
         allowed.add("oth");
 
-        if (!allowed.contains(str)) return false;
-
-        return true;
+        return allowed.contains(str);
     }
 
     public boolean passportID(String str) {
@@ -162,14 +156,13 @@ public class Day4
     public boolean height(String str) {
         if (str.length() < 4) return false;
         int number = Integer.parseInt(str.substring(0, str.length()-2));
-        String metric = str.substring(str.length()-2, str.length());
+        String metric = str.substring(str.length()-2);
         if (metric.equals("cm")) {
-            if (number < 150 || number > 193) return false;
+            return number >= 150 && number <= 193;
         }
         else {
-            if (number < 59 || number > 76) return false;
+            return number >= 59 && number <= 76;
         }
-        return true;
     }
 
     public boolean isValid(String[] passport) {
